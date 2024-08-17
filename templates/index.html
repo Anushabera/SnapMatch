@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Finding Duplicacy in Uploaded Images</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h2>Finding Duplicacy in Uploaded Images</h2>
+    <div class="form-container">
+        <form action="/upload" method="post" enctype="multipart/form-data" id="uploadForm">
+            <div class="form-group">
+                <h3>Image 1</h3>
+                <input type="file" name="file1" accept="image/*" id="file1" required><br><br>
+            </div>
+            <div class="form-group">
+                <h3>Image 2</h3>
+                <input type="file" name="file2" accept="image/*" id="file2" required><br><br>
+            </div>
+            <input type="submit" value="Check Similarity" class="submit-button">
+        </form>
+    </div>
+    <div class="image-preview" id="imagePreview">
+        <img id="imgPreview1" src="#" alt="Image 1" style="display: none;">
+        <img id="imgPreview2" src="#" alt="Image 2" style="display: none;">
+    </div>
+    <div class="result-heading">
+        <h3>Result</h3>
+    </div>
+    <div id="result"></div>
+    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+</body>
+</html>

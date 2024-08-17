@@ -1,0 +1,184 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finding Duplicates</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Finding Duplicates</h1>
+        <div class="dropdown-section">
+            <div class="dropdown">
+                <label for="district">District</label>
+                <select id="district">
+                    <option value="" disabled selected>Select District</option>
+                    <option value="1">1</option>
+                    <option value="9">9</option>
+                    <option value="20">20</option>
+                    <option value="562">562</option>
+                </select>
+            </div>
+            <div class="dropdown">
+                <label for="taluk">Taluk</label>
+                <select id="taluk">
+                    <option value="" disabled selected>Select Taluk</option>
+                    <option value="1">1</option>
+                    <option value="3">3</option>
+                    <option value="12">12</option>
+                    <option value="5473">5473</option>
+                </select>
+            </div>
+        </div>
+        <button onclick="checkImages()">Check</button>
+        <h2>Result</h2>
+        <div id="image-container"></div>
+    </div>
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+</body>
+</html> -->
+
+
+
+<!-- ----------------------------------------------Database------------------------------------------ -->
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finding Duplicates</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Finding Duplicates</h1>
+        <div class="dropdown-section">
+            <div class="dropdown">
+                <label for="district">District</label>
+                <select id="district">
+                    <option value="" disabled selected>Select District</option>
+                    <option value="1">1</option>
+                    <option value="9">9</option>
+                    <option value="20">20</option>
+                    <option value="562">562</option>
+                </select>
+            </div>
+            <div class="dropdown">
+                <label for="taluk">Taluk</label>
+                <select id="taluk">
+                    <option value="" disabled selected>Select Taluk</option>
+                    <option value="1">1</option>
+                    <option value="3">3</option>
+                    <option value="12">12</option>
+                    <option value="5473">5473</option>
+                </select>
+            </div>
+        </div>
+        <button onclick="checkImages()">Check</button>
+        <h2>Result</h2>
+        <div id="image-container"></div>
+    </div>
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+</body>
+</html> -->
+
+<!-- ----------------------------Fetch all details -------------------------- -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finding Duplicates</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Finding Duplicates</h1>
+        <div class="dropdown-section">
+            <div class="dropdown">
+                <label for="district">District</label>
+                <select id="district">
+                    <option value="" disabled selected>Select District</option>
+                    <option value="1">1</option>
+                    <option value="9">9</option>
+                    <option value="20">20</option>
+                    <option value="562">562</option>
+                </select>
+            </div>
+            <div class="dropdown">
+                <label for="taluk">Taluk</label>
+                <select id="taluk">
+                    <option value="" disabled selected>Select Taluk</option>
+                    <option value="1">1</option>
+                    <option value="3">3</option>
+                    <option value="12">12</option>
+                    <option value="5473">5473</option>
+                </select>
+            </div>
+        </div>
+        <button onclick="checkImages()">Check</button>
+        <h2>Result</h2>
+        <div id="image-container"></div>
+    </div>
+    <script>
+        function checkImages() {
+            const district = document.getElementById('district').value;
+            const taluk = document.getElementById('taluk').value;
+            
+            if (district && taluk) {
+                // Clear previous images
+                const imageContainer = document.getElementById('image-container');
+                imageContainer.innerHTML = '';
+
+                // Fetch images from the server
+                fetch(`/get-images?district=${encodeURIComponent(district)}&taluk=${encodeURIComponent(taluk)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.images.length === 0) {
+                            imageContainer.innerHTML = '<p>No images found</p>';
+                        } else {
+                            data.images.forEach(image => {
+                                const imgElement = document.createElement('img');
+                                imgElement.src = `data:image/jpeg;base64,${image.image_base64}`;
+                                imgElement.onclick = () => openModal(imgElement.src, image);
+                                imageContainer.appendChild(imgElement);
+
+                                // Append details below each image
+                                const detailsContainer = document.createElement('div');
+                                detailsContainer.innerHTML = `
+                                    <p>Name: ${image.BM_First_Name_Eng}</p>
+                                    <p>Scheme Code: ${image.BM_Scheme_Code}</p>
+                                    <p>Address: ${image.BM_Address_Eng1}</p>
+                                `;
+                                imageContainer.appendChild(detailsContainer);
+                            });
+                        }
+                    })
+                    .catch(error => console.error('Error fetching images:', error));
+            }
+        }
+
+        function openModal(imageUrl, image) {
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            
+            const modalContent = document.createElement('img');
+            modalContent.className = 'modal-content';
+            modalContent.src = imageUrl;
+            
+            modal.appendChild(modalContent);
+            document.body.appendChild(modal);
+            
+            // Close modal when clicked outside of the image
+            modal.onclick = () => closeModal(modal);
+        }
+
+        function closeModal(modal) {
+            document.body.removeChild(modal);
+        }
+    </script>
+</body>
+</html>

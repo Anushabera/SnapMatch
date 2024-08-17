@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Duplicate Face Detection Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Duplicate Face Detection Results</h1>
+        <div class="results">
+            {% for result in results %}
+                <div class="result-pair">
+                    <div class="person">
+                        <h2>{{ result.first_id }}</h2>
+                        {% if result.first_data %}
+                            {% if result.first_data[3] %}
+                                <img src="data:image/jpeg;base64,{{ result.first_data[3] }}" alt="Image">
+                            {% endif %}
+                            <p>Name: {{ result.first_data[0] }}</p>
+                            <p>Scheme Code: {{ result.first_data[1] }}</p>
+                            <p>Address: {{ result.first_data[2] }}</p>
+                        {% else %}
+                            <p>No data found.</p>
+                        {% endif %}
+                    </div>
+                    <div class="person">
+                        <h2>{{ result.second_id }}</h2>
+                        {% if result.second_data %}
+                            {% if result.second_data[3] %}
+                                <img src="data:image/jpeg;base64,{{ result.second_data[3] }}" alt="Image">
+                            {% endif %}
+                            <p>Name: {{ result.second_data[0] }}</p>
+                            <p>Scheme Code: {{ result.second_data[1] }}</p>
+                            <p>Address: {{ result.second_data[2] }}</p>
+                        {% else %}
+                            <p>No data found.</p>
+                        {% endif %}
+                    </div>
+                </div>
+                <hr> <!-- Add a horizontal line after each pair -->
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
