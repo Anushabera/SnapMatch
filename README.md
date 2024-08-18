@@ -2,6 +2,11 @@
 
 Welcome to **SnapMatch** - a powerful and intuitive tool designed to help you identify duplicate images with ease. Whether you’re managing a large collection of photos or need to find similar images quickly, SnapMatch has you covered!
 
+## Glimpse of the site
+
+![image](https://github.com/user-attachments/assets/5a79a9d4-e693-4ea0-bc7c-3dec92b1807d)
+
+
 ## 🚀 Features
 
 - **Image Upload:** Easily upload two images to compare and check for duplicity.
