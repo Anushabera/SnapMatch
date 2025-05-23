@@ -69,9 +69,6 @@ We welcome contributions to make SnapMatch even better! To contribute:
 4. **Push to the Branch**
 5. **Submit a Pull Request**
 
-## 📜 License
-
-SnapMatch is licensed under the [MIT License](LICENSE). See the [LICENSE](LICENSE) file for details.
 
 ## 📧 Contact
 
